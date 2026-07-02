@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>7'li Zar Oyunu</title>
+    <title>Geliştirilmiş 7'li Zar Oyunu</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -15,14 +15,19 @@
             margin-top: 20px;
             display: inline-block;
             position: relative;
+            min-height: 220px; /* Yer kaplamaması için min-height */
         }
-        #dice-gif {
+        #dice-gif, #final-dice-7 {
             width: 200px; /* Zarın boyutu */
             height: auto;
-            display: none; /* Başlangıçta gizli */
+            border-radius: 15px; /* Hafif yuvarlatma */
+        }
+        /* Başlangıçta gizli */
+        #dice-gif, #final-dice-7 {
+            display: none;
         }
         button {
-            padding: 10px 20px;
+            padding: 12px 24px;
             font-size: 18px;
             cursor: pointer;
             background-color: #4CAF50;
@@ -32,7 +37,7 @@
             margin-top: 20px;
         }
         #result-text {
-            font-size: 24px;
+            font-size: 32px;
             font-weight: bold;
             margin-top: 20px;
             color: #333;
@@ -42,11 +47,13 @@
 <body>
 
     <h1>Basit Zar Atma Oyunu</h1>
-    <p>"Normal" bir zar atın ve hileyi görün!</p>
+    <p>"Normal" bir zar atın ve sürprizi sadece bittiğinde görün!</p>
 
     <div id="dice-container">
-        <!-- GIF dosyasının adının doğru olduğundan emin olun -->
-        <img id="dice-gif" src="zar.gif" alt="Zar Atılıyor...">
+        <!-- Atış esnasında dönen GIF, 7'yi göstermez -->
+        <img id="dice-gif" src="zar_animasyonu_revize.gif" alt="Zar Atılıyor...">
+        <!-- Atış bittikten sonra gösterilen durağan 7 resmi -->
+        <img id="final-dice-7" src="sonuc_7.png" alt="Hileli 7!">
     </div>
 
     <br>
@@ -57,23 +64,33 @@
     <script>
         function rollDice() {
             var diceImg = document.getElementById('dice-gif');
+            var finalDiceImg = document.getElementById('final-dice-7');
             var resultText = document.getElementById('result-text');
             var button = document.querySelector('button');
 
-            // Düğmeyi devre dışı bırak ve GIF'i göster
+            // 1. Düğmeyi devre dışı bırak
             button.disabled = true;
             button.innerText = "Atılıyor...";
+            
+            // 2. Mevcut sonuçları gizle ve GIF'i göster
             resultText.innerText = "";
+            finalDiceImg.style.display = "none";
             diceImg.style.display = "block";
 
-            // GIF animasyonunun süresine göre (yaklaşık 4 saniye)
-            // sonucu göster ve düğmeyi tekrar aktif et
+            // 3. GIF animasyonunun süresine göre (yaklaşık 4 saniye)
+            // sonucu göster ve durağan 7 resmini aç
             setTimeout(function() {
+                // GIF'i gizle, durağan 7'yi göster
                 diceImg.style.display = "none";
+                finalDiceImg.style.display = "block";
+                
+                // Metni yaz
                 resultText.innerText = "Sonuç: 7!";
+                
+                // Düğmeyi aktif et
                 button.disabled = false;
                 button.innerText = "Zar At";
-            }, 4000); // 4000 milisaniye = 4 saniye
+            }, 4000); // GIF süresi 4 saniye
         }
     </script>
 
