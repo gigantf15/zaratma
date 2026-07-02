@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7'li Zar Oyunu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            padding: 50px;
+        }
+        #dice-container {
+            margin-top: 20px;
+            display: inline-block;
+            position: relative;
+        }
+        #dice-gif {
+            width: 200px; /* Zarın boyutu */
+            height: auto;
+            display: none; /* Başlangıçta gizli */
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        #result-text {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Basit Zar Atma Oyunu</h1>
+    <p>"Normal" bir zar atın ve hileyi görün!</p>
+
+    <div id="dice-container">
+        <!-- GIF dosyasının adının doğru olduğundan emin olun -->
+        <img id="dice-gif" src="zar.gif" alt="Zar Atılıyor...">
+    </div>
+
+    <br>
+    <button onclick="rollDice()">Zar At</button>
+
+    <p id="result-text"></p>
+
+    <script>
+        function rollDice() {
+            var diceImg = document.getElementById('dice-gif');
+            var resultText = document.getElementById('result-text');
+            var button = document.querySelector('button');
+
+            // Düğmeyi devre dışı bırak ve GIF'i göster
+            button.disabled = true;
+            button.innerText = "Atılıyor...";
+            resultText.innerText = "";
+            diceImg.style.display = "block";
+
+            // GIF animasyonunun süresine göre (yaklaşık 4 saniye)
+            // sonucu göster ve düğmeyi tekrar aktif et
+            setTimeout(function() {
+                diceImg.style.display = "none";
+                resultText.innerText = "Sonuç: 7!";
+                button.disabled = false;
+                button.innerText = "Zar At";
+            }, 4000); // 4000 milisaniye = 4 saniye
+        }
+    </script>
+
+</body>
+</html>
